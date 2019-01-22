@@ -458,7 +458,10 @@ class Dump(object):
         for dirName, subdirList, fileList in os.walk(os.path.join(start_fs, '/var/log')):
             for fname in fileList:
                 absolut_path = os.path.join(dirName, fname)
-                size = os.stat(absolut_path).st_size
+                try:
+                    size = os.stat(absolut_path).st_size
+                except:
+                    continue
                 if size < size_max_log:
                     files_list_to_zip[os.path.join(dirName, fname)] = size
         files_list_to_zip_sorted = sorted(files_list_to_zip.items(), key=lambda x: x[1])
